@@ -62,6 +62,11 @@ sleep 20  # Initial delay before checking status
 while true; do
 
   # Count the number of commands still in progress or pending.
+
+  aws ssm list-commands \
+    --query "length(Commands[?Status=='InProgress' || Status=='Pending'])" \
+    --output text
+
   count=$(aws ssm list-commands \
     --query "length(Commands[?Status=='InProgress' || Status=='Pending'])" \
     --output text | tr -d '\r\n' | xargs)

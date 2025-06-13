@@ -49,7 +49,7 @@ while true; do
     break
   fi
 
-  echo "WARNING: Still waiting... $count command(s) in progress."
+  echo "WARNING: Still waiting... command(s) in progress."
   sleep 5
 done
 

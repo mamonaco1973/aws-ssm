@@ -40,13 +40,13 @@ win_command_id=$(aws ssm send-command \
   --document-name "AWS-RunPowerShellScript" \
   --document-version "1" \
   --targets '[{"Key":"tag:Name","Values":["windows-instance"]}]' \
-  --parameters '{"workingDirectory":[""],"executionTimeout":["3600"],"commands":["curl.exe 10.0.0.148"]}' \
+  --parameters "{\"workingDirectory\":[\"\"],\"executionTimeout\":[\"3600\"],\"commands\":[\"curl.exe $ubuntu_ip\"]}" \
   --timeout-seconds 600 \
   --max-concurrency "50" \
   --max-errors "0" \
+  --region us-east-2 \
   --query "Command.CommandId" \
   --output text)
-
 
 echo "NOTE: Waiting for SSM commands to finish..."
 sleep 5

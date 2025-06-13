@@ -128,10 +128,10 @@ resource "aws_subnet" "ssm-private-subnet-1" {
 resource "aws_subnet" "ssm-private-subnet-2" {
   vpc_id               = aws_vpc.ssm-vpc.id
   cidr_block           = "10.0.0.192/26"  # 10.0.0.192 - 10.0.0.255
-  availability_zone_id = "use1-az4"
+  availability_zone    = "us-east-2c"
 
   tags = {
-    Name = "ad-private-subnet-2"
+    Name = "ssm-private-subnet-2"
   }
 }
 

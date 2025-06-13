@@ -78,4 +78,8 @@ while true; do
 done
 
 # Run the validation script to confirm successful deployment and configuration.
+echo ""
+echo "NOTE: Running validation script..."
+echo ""
+
 ./validate.sh

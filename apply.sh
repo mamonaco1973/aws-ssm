@@ -29,6 +29,9 @@ echo "NOTE: Waiting for instances to be ready..."
 sleep 60
 
 # Send SSM command to install Apache on the Ubuntu instance.
+
+echo "NOTE: Running SSM command to install Apache on Ubuntu instance..."
+
 aws ssm send-command \
   --document-name "InstallApacheOnUbuntu" \
   --document-version "1" \
@@ -36,10 +39,12 @@ aws ssm send-command \
   --parameters '{}' \
   --timeout-seconds 600 \
   --max-concurrency "50" \
-  --max-errors "0" \
-  --region us-east-2 > /dev/null
+  --max-errors "0" > /dev/null
 
 # Send SSM command to install IIS and Hello World site on the Windows instance.
+
+echo "NOTE: Running SSM command to install IIS and Hello World on Windows instance..."
+
 aws ssm send-command \
   --document-name "InstallIISHelloWorld" \
   --document-version "1" \
@@ -47,8 +52,7 @@ aws ssm send-command \
   --parameters '{}' \
   --timeout-seconds 600 \
   --max-concurrency "50" \
-  --max-errors "0" \
-  --region us-east-2 > /dev/null
+  --max-errors "0"  > /dev/null
 
 # Notify user that we are monitoring the SSM command executions.
 echo "NOTE: Waiting for SSM commands to finish..."

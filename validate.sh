@@ -77,14 +77,14 @@ sleep 5
 while true; do
   count=$(aws ssm list-commands \
     --query "length(Commands[?Status=='InProgress' || Status=='Pending'])" \
-    --output text | tr -d '\r\n' | xargs)
+    --output text | head -n 1)
 
   if [[ "$count" == "0" ]]; then
     echo "NOTE: All SSM commands have completed."
     break
   fi
 
-  echo "WARNING: Still waiting... command(s) in progress."
+  echo "WARNING: Still waiting... $count command(s) in progress."
   sleep 20
 done
 

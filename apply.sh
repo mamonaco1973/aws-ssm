@@ -63,13 +63,9 @@ while true; do
 
   # Count the number of commands still in progress or pending.
 
-  aws ssm list-commands \
-    --query "length(Commands[?Status=='InProgress' || Status=='Pending'])" \
-    --output text
-
   count=$(aws ssm list-commands \
     --query "length(Commands[?Status=='InProgress' || Status=='Pending'])" \
-    --output text | tr -d '\r\n' | xargs)
+    --output text | head -n 1)
 
   # Exit loop if no commands are still running.
   if [[ "$count" == "0" ]]; then
@@ -78,13 +74,11 @@ while true; do
   fi
 
   # Display how many commands are still running and wait before checking again.
-  echo "WARNING: Still waiting... command(s) in progress."
+  echo "WARNING: Still waiting... $count command(s) in progress."
   sleep 10
 done
 
 # Run the validation script to confirm successful deployment and configuration.
-echo ""
 echo "NOTE: Running validation script..."
-echo ""
 
 ./validate.sh

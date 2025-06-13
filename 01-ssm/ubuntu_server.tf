@@ -1,25 +1,14 @@
+data "aws_ssm_parameter" "ubuntu_24_04" {
+  name = "/aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id"
+}
+
 data "aws_ami" "ubuntu_ami" {
   most_recent = true
   owners      = ["099720109477"]
 
   filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-noble-24.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
+    name   = "image-id"
+    values = [data.aws_ssm_parameter.ubuntu_24_04.value]
   }
 }
 

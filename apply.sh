@@ -42,17 +42,25 @@ echo "NOTE: Waiting for SSM commands to finish..."
 sleep 20
 
 while true; do
+
+  aws ssm list-commands \
+  --query "Commands[?Status=='InProgress' || Status=='Pending'].[CommandId, DocumentName, RequestedDateTime]" \
+  --output table
+
   count=$(aws ssm list-commands \
-    --region us-east-2 \
-    --query "Commands[?Status=='InProgress' || Status=='Pending'] | length(@)" \
-    --output text | tr -d '\r' | tr -d '\n' | xargs)
+  --query "length(Commands[?Status=='InProgress' || Status=='Pending'])" \
+  --output text | tr -d '\r\n' | xargs)
+
+  #count=$(aws ssm list-commands \
+  #  --query "Commands[?Status=='InProgress' || Status=='Pending'] | length(@)" \
+  #  --output text | tr -d '\r' | tr -d '\n' | xargs)
 
   if [[ "$count" == "0" ]]; then
     echo "NOTE: All SSM commands have completed."
     break
   fi
 
-  echo "WARNING: Still waiting... command(s) in progress."
+  echo "WARNING: Still waiting... $count command(s) in progress."
   sleep 20
 done
 

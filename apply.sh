@@ -52,7 +52,7 @@ while true; do
   fi
 
   echo "WARNING: Still waiting... command(s) in progress."
-  sleep 5
+  sleep 20
 done
 
 # Now validate the build

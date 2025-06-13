@@ -25,7 +25,7 @@ fi
 echo "NOTE: Private ip address for ubuntu server is '$ubuntu_ip'"
 
 
-echo "🚀 Sending SSM command..."
+echo "NOTE: Sending SSM command to windows instance to validate connectivity to ubuntu instance..."
 
 command_id=$(aws ssm send-command \
   --document-name "AWS-RunPowerShellScript" \
@@ -35,11 +35,27 @@ command_id=$(aws ssm send-command \
   --timeout-seconds 600 \
   --max-concurrency "50" \
   --max-errors "0" \
-  --region us-east-2 \
   --query "Command.CommandId" \
   --output text)
 
-echo "📌 Command ID: $command_id"
+
+echo "NOTE: Waiting for SSM commands to finish..."
+sleep 10
+
+while true; do
+  count=$(aws ssm list-commands \
+    --query "Commands[?Status=='InProgress' || Status=='Pending'] | length(@)" \
+    --output text | tr -d '\r' | tr -d '\n' | xargs)
+
+  if [[ "$count" == "0" ]]; then
+    echo "NOTE: All SSM commands have completed."
+    break
+  fi
+
+  echo "WARNING: Still waiting... command(s) in progress."
+  sleep 20
+done
+
 
 
 

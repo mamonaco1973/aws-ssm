@@ -48,6 +48,20 @@ win_command_id=$(aws ssm send-command \
   --query "Command.CommandId" \
   --output text)
 
+echo "NOTE: Sending SSM command to ubuntu instance to validate connectivity to windows instance..."
+
+ubuntu_command_id=$(aws ssm send-command \
+  --document-name "AWS-RunShellScript" \
+  --document-version "1" \
+  --targets '[{"Key":"tag:Name","Values":["ubuntu-instance"]}]' \
+  --parameters "{\"workingDirectory\":[\"\"],\"executionTimeout\":[\"3600\"],\"commands\":[\"curl $windows_ip\"]}" \
+  --timeout-seconds 600 \
+  --max-concurrency "50" \
+  --max-errors "0" \
+  --region us-east-2 \
+  --query "Command.CommandId" \
+  --output text)
+
 echo "NOTE: Waiting for SSM commands to finish..."
 sleep 5
 
@@ -72,6 +86,16 @@ response=$(aws ssm get-command-invocation \
   --output text)
 
 echo "NOTE: Response from windows - $response"
+
+response=$(aws ssm get-command-invocation \
+  --command-id "$ubuntu_command_id" \
+  --instance-id "$ubuntu_id" \
+  --query "StandardOutputContent" \
+  --output text)
+
+echo "NOTE: Response from ubuntu - $response"
+
+
 
 
 

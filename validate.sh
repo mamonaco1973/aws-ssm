@@ -40,7 +40,7 @@ command_id=$(aws ssm send-command \
 
 
 echo "NOTE: Waiting for SSM commands to finish..."
-sleep 10
+sleep 5
 
 while true; do
   count=$(aws ssm list-commands \
@@ -56,6 +56,13 @@ while true; do
   sleep 20
 done
 
+response=$(aws ssm get-command-invocation \
+  --command-id "$command_id" \
+  --region "$REGION" \
+  --query "StandardOutputContent" \
+  --output text)
+
+echo $response
 
 
 

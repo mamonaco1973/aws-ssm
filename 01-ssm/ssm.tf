@@ -26,3 +26,29 @@ resource "aws_ssm_document" "install_iis_custom" {
     ]
   })
 }
+
+resource "aws_ssm_document" "install_apache_ubuntu" {
+  name            = "InstallApacheOnUbuntu"
+  document_type   = "Command"
+  document_format = "JSON"
+
+  content = jsonencode({
+    schemaVersion = "2.2",
+    description   = "Install and configure Apache2 on Ubuntu",
+    mainSteps = [
+      {
+        action = "aws:runShellScript",
+        name   = "installApache",
+        inputs = {
+          runCommand = [
+            "sudo apt update",
+            "sudo apt install -y apache2",
+            "sudo systemctl enable apache2",
+            "sudo systemctl start apache2",
+            "echo \"Welcome to Apache\" | sudo tee /var/www/html/index.html > /dev/null"
+          ]
+        }
+      }
+    ]
+  })
+}

@@ -5,7 +5,7 @@ resource "aws_ssm_document" "install_iis_custom" {
 
   content = jsonencode({
     schemaVersion = "2.2",
-    description   = "Install IIS and deploy a Hello World page",
+    description   = "Install IIS and write a plain message",
     mainSteps = [
       {
         action = "aws:runPowerShellScript",
@@ -17,7 +17,7 @@ resource "aws_ssm_document" "install_iis_custom" {
             "Start-Service W3SVC",
             "$webRoot = \\\"C:\\\\inetpub\\\\wwwroot\\\"",
             "$indexPath = Join-Path $webRoot \\\"index.html\\\"",
-            "$html = @\"Greetings from IIS\"@",
+            "$html = @\"\nWelcome from IIS\n\"@",
             "Set-Content -Path $indexPath -Value $html -Encoding UTF8",
             "Write-Host \"`nIIS is running. Visit: http://localhost`n\""
           ]

@@ -13,6 +13,8 @@ terraform init
 terraform apply -auto-approve
 cd ..
 
+echo "NOTE: Waiting for instances to be ready..."
+
 # Run SSM documents on the instances 
 sleep 60 # Wait for instances to be ready
 
@@ -52,6 +54,10 @@ while true; do
   echo "WARNING: Still waiting... command(s) in progress."
   sleep 5
 done
+
+# Now validate the build
+
+./validate.sh
 
 
 

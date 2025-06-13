@@ -39,6 +39,7 @@ aws ssm send-command \
   --region us-east-2 > /dev/null
 
 echo "NOTE: Waiting for SSM commands to finish..."
+sleep 20
 
 while true; do
   count=$(aws ssm list-commands \

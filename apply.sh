@@ -13,7 +13,7 @@ terraform init
 terraform apply -auto-approve
 cd ..
 
-/* Run SSM documents on the instances */
+# Run SSM documents on the instances 
 sleep 60 # Wait for instances to be ready
 
 aws ssm send-command \

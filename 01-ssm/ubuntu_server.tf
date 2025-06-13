@@ -24,6 +24,9 @@ resource "aws_instance" "ubuntu_instance" {
                 apt update
                 snap install amazon-ssm-agent --classic
                 systemctl enable --now snap.amazon-ssm-agent.amazon-ssm-agent.service
+                sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' \
+                   /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+                sudo systemctl restart ssh 
               EOF
 
   tags = {

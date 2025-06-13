@@ -36,4 +36,9 @@ aws ssm send-command \
   --max-errors "0" \
   --region us-east-2 > /dev/null
 
+aws ssm list-commands \
+  --region us-east-2 \
+  --query "Commands[?Status=='InProgress' || Status=='Pending'] | length(@)"
+
+
 

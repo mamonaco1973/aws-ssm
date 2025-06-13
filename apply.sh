@@ -69,7 +69,7 @@ while true; do
   fi
 
   # Display how many commands are still running and wait before checking again.
-  echo "WARNING: Still waiting... $count command(s) in progress."
+  echo "WARNING: Still waiting... command(s) in progress."
   sleep 20
 done
 

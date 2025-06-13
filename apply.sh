@@ -36,20 +36,20 @@ aws ssm send-command \
   --max-errors "0" \
   --region us-east-2 > /dev/null
 
-echo "⏳ Waiting for SSM commands to finish..."
+echo "NOTE: Waiting for SSM commands to finish..."
 
 while true; do
   count=$(aws ssm list-commands \
     --region us-east-2 \
     --query "Commands[?Status=='InProgress' || Status=='Pending'] | length(@)" \
-    --output text)
+    --output text | tr -d '\r' | tr -d '\n' | xargs)
 
-  if [[ "$count" -eq 0 ]]; then
-    echo "✅ All SSM commands have completed."
+  if [[ "$count" == "0" ]]; then
+    echo "NOTE: All SSM commands have completed."
     break
   fi
 
-  echo "Still waiting... $count command(s) in progress."
+  echo "WARNING: Still waiting... $count command(s) in progress."
   sleep 5
 done
 

@@ -45,7 +45,7 @@ resource "aws_ssm_document" "install_apache_ubuntu" {
             "sudo apt install -y apache2",
             "sudo systemctl enable apache2",
             "sudo systemctl start apache2",
-            "echo \"Welcome to Apache\" | sudo tee /var/www/html/index.html > /dev/null"
+            "echo \"Welcome from Apache\" | sudo tee /var/www/html/index.html > /dev/null"
           ]
         }
       }

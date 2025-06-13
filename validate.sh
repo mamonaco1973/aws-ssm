@@ -11,6 +11,11 @@ if [[ -z "$windows_ip" ]]; then
   exit 1
 fi
 
+windows_id=$(aws ec2 describe-instances \
+  --filters "Name=private-ip-address,Values=$windows_ip" \
+  --query "Reservations[0].Instances[0].InstanceId" \
+  --output text)
+
 echo "NOTE: Private ip address for windows server is '$windows_ip'"
 
 ubuntu_ip=$(aws ec2 describe-instances   \
@@ -22,12 +27,16 @@ if [[ -z "$ubuntu_ip" ]]; then
   exit 1
 fi
 
-echo "NOTE: Private ip address for ubuntu server is '$ubuntu_ip'"
+ubuntu_id=$(aws ec2 describe-instances \
+  --filters "Name=private-ip-address,Values=$ubuntu_ip" \
+  --query "Reservations[0].Instances[0].InstanceId" \
+  --output text)
 
+echo "NOTE: Private ip address for ubuntu server is '$ubuntu_ip'"
 
 echo "NOTE: Sending SSM command to windows instance to validate connectivity to ubuntu instance..."
 
-command_id=$(aws ssm send-command \
+win_command_id=$(aws ssm send-command \
   --document-name "AWS-RunPowerShellScript" \
   --document-version "1" \
   --targets '[{"Key":"tag:Name","Values":["windows-instance"]}]' \
@@ -57,8 +66,8 @@ while true; do
 done
 
 response=$(aws ssm get-command-invocation \
-  --command-id "$command_id" \
-  --region "$REGION" \
+  --command-id "$win_command_id" \
+  --instance-id "$windows_id" \
   --query "StandardOutputContent" \
   --output text)
 

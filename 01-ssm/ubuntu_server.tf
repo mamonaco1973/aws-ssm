@@ -15,7 +15,7 @@ resource "aws_instance" "ubuntu_instance" {
   instance_type            = "t2.micro"                          # Instance type
   subnet_id                = aws_subnet.ssm-private-subnet-1.id  # Launch in the public subnet
   security_groups          = [aws_security_group.ssm_sg.id]      # Apply the security group
-  iam_instance_profile     = aws_iam_instance_profile.ec2_ssm_profile
+  iam_instance_profile     = aws_iam_instance_profile.ec2_ssm_profile.name
                                                                  # Use the IAM instance profile for SSM access
 
   tags = {

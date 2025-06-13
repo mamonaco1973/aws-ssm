@@ -56,7 +56,7 @@ aws ssm send-command \
 
 # Notify user that we are monitoring the SSM command executions.
 echo "NOTE: Waiting for SSM commands to finish..."
-sleep 20  # Initial delay before checking status
+sleep 10  # Initial delay before checking status
 
 # Continuously check for any SSM commands still in progress or pending.
 while true; do
@@ -79,7 +79,7 @@ while true; do
 
   # Display how many commands are still running and wait before checking again.
   echo "WARNING: Still waiting... command(s) in progress."
-  sleep 20
+  sleep 10
 done
 
 # Run the validation script to confirm successful deployment and configuration.

@@ -71,7 +71,8 @@ response=$(aws ssm get-command-invocation \
   --query "StandardOutputContent" \
   --output text)
 
-echo $response
+echo "NOTE: Response from windows - $response"
+
 
 
 

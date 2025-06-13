@@ -32,7 +32,8 @@ resource "aws_instance" "windows_instance" {
 
   # SECURITY GROUPS  
   vpc_security_group_ids = [
-    aws_security_group.ssm_sg.id
+    aws_security_group.ssm_sg.id,
+    aws_security_group.ssm_http_sg.id
   ]
 
   iam_instance_profile = aws_iam_instance_profile.ec2_ssm_profile.name

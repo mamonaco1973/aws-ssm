@@ -1,11 +1,25 @@
-# AMI Data Source
 data "aws_ami" "ubuntu_ami" {
-  most_recent = true                    # Fetch the most recent AMI
-  owners      = ["099720109477"]        # Canonical's AWS Account ID
+  most_recent = true
+  owners      = ["099720109477"] # Canonical
 
   filter {
-    name   = "name"                           # Filter AMIs by name
-    values = ["*ubuntu-noble-24.04-amd64-*"]  # Match Ubuntu AMI
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-noble-24.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
   }
 }
 

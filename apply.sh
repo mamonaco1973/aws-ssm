@@ -43,10 +43,10 @@ aws ssm send-command \
 
 # Send SSM command to install IIS and Hello World site on the Windows instance.
 
-echo "NOTE: Running SSM command to install IIS and Hello World on Windows instance..."
+echo "NOTE: Running SSM command to install IIS on Windows instance..."
 
 aws ssm send-command \
-  --document-name "InstallIISHelloWorld" \
+  --document-name "InstallIIS" \
   --document-version "1" \
   --targets '[{"Key":"tag:Name","Values":["windows-instance"]}]' \
   --parameters '{}' \

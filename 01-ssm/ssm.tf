@@ -1,5 +1,5 @@
 resource "aws_ssm_document" "install_iis_custom" {
-  name            = "InstallIISHelloWorld"
+  name            = "InstallIIS"
   document_type   = "Command"
   document_format = "JSON"
 

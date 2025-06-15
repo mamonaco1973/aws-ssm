@@ -10,7 +10,7 @@ We’ll build a minimal, secure AWS environment with:
 - AWS **IAM roles** to grant SSM access  
 - **Security Groups** scoped to minimum access  
 - **SSM Session Manager** for browser-based remote access
-- Two custom **SSM documents** for installing an HTTP server
+- Two custom **SSM documents** for installing an HTTP server on the windows and ubuntu instances.
 
 All instances are deployed **without public IPs** and are managed through the AWS Console or CLI using Session Manager.
 
@@ -109,7 +109,7 @@ resource "aws_instance" "ubuntu" {
   associate_public_ip_address = false
 
   tags = {
-    Name = "Ubuntu-SSM"
+    Name = "ubuntu-instance"
   }
 }
 ```

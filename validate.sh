@@ -22,6 +22,7 @@ windows_id=$(aws ec2 describe-instances \
   --output text)
 
 echo "NOTE: Private IP address for Windows server is '$windows_ip'"
+echo "NOTE: CLI to connect to windows - 'aws ssm start-session --target $windows_id --region $AWS_DEFAULT_REGION'"
 
 # Get the private IP address of the running Ubuntu instance named 'ubuntu-instance'.
 ubuntu_ip=$(aws ec2 describe-instances \
@@ -42,6 +43,7 @@ ubuntu_id=$(aws ec2 describe-instances \
   --output text)
 
 echo "NOTE: Private IP address for Ubuntu server is '$ubuntu_ip'"
+echo "NOTE: CLI to connect to ubuntu - 'aws ssm start-session --target $ubuntu_id --region $AWS_DEFAULT_REGION'"
 
 # Send an SSM command to the Windows instance to test connectivity to the Ubuntu instance using curl.
 echo "NOTE: Sending SSM command to Windows instance to validate connectivity to Ubuntu..."

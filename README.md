@@ -57,8 +57,6 @@ resource "aws_security_group" "ec2_sg" {
 }
 ```
 
-> ✅ No inbound ports are opened.
-
 ### 3. **Create IAM Role and Attach Policies**
 
 Each instance is launched with an IAM role that allows it to communicate with SSM.
@@ -127,7 +125,7 @@ Once deployed, instances automatically register with SSM if:
 You can now open a shell or PowerShell session:
 
 ```bash
-aws ssm start-session --target i-xxxxxxxxxxxxxxxxx
+aws ssm start-session --target i-xxxxxxxxxxxxxxxxx --region us-east-2
 ```
 
 Or access via the **AWS Console → Systems Manager → Session Manager**.
@@ -147,8 +145,8 @@ Ensure your AWS credentials are exported or available via a configured profile.
 ## Download this Repository
 
 ```bash
-git clone https://github.com/mamonaco1973/aws-ssm-demo.git
-cd aws-ssm-demo
+git clone https://github.com/mamonaco1973/aws-ssm.git
+cd aws-ssm
 ```
 
 ---
@@ -156,16 +154,30 @@ cd aws-ssm-demo
 ## Build the Code
 
 ```bash
-ubuntu@devvm:~/aws-ssm-demo$ ./apply.sh
-NOTE: Validating that required commands are in PATH...
-NOTE: terraform is found in the current PATH.
+azureuser@develop-vm:~/aws-ssm$ ./apply.sh
+NOTE: Validating that required commands are found in your PATH.
 NOTE: aws is found in the current PATH.
 NOTE: jq is found in the current PATH.
+NOTE: terraform is found in the current PATH.
 NOTE: All required commands are available.
-NOTE: Validating AWS credentials...
-NOTE: Successfully authenticated.
-Initializing Terraform...
-Applying configuration...
+NOTE: Checking AWS cli connection.
+NOTE: Successfully logged into AWS.
+Initializing the backend...
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+data.aws_ami.windows_ami: Reading...
+data.aws_ssm_parameter.ubuntu_24_04: Reading...
 ```
 
 ---
@@ -240,7 +252,7 @@ This document installs Apache on the Ubuntu instance and deploys a simple web pa
 }
 ```
 
-### 2. **InstallIISHelloWorld**
+### 2. **InstallIIS**
 
 This document installs IIS on the Windows instance and configures a basic site.
 
@@ -264,22 +276,12 @@ This document installs IIS on the Windows instance and configures a basic site.
 These documents are registered using Terraform and then invoked programmatically or via CLI:
 
 ```bash
-aws ssm send-command   --document-name "InstallApacheOnUbuntu"   --targets "Key=tag:Name,Values=Ubuntu-SSM"   --comment "Install Apache via SSM"
+aws ssm send-command   --document-name "InstallApacheOnUbuntu"   --targets "Key=tag:Name,Values=ubuntu-instance"   --comment "Install Apache via SSM"
 ```
 
 ```bash
-aws ssm send-command   --document-name "InstallIISHelloWorld"   --targets "Key=tag:Name,Values=Windows-SSM"   --comment "Install IIS via SSM"
+aws ssm send-command   --document-name "InstallIISHelloWorld"   --targets "Key=tag:Name,Values=windows-instance"   --comment "Install IIS via SSM"
 ```
 
 This allows hands-off configuration of instances **immediately after launch**, making the instances production-ready without manual intervention.
 
-
-## Cleanup
-
-To destroy all resources:
-
-```bash
-terraform destroy
-```
-
-This will remove all EC2 instances, roles, subnets, and related infrastructure.

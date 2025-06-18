@@ -134,11 +134,11 @@ Or access via the **AWS Console → Systems Manager → Session Manager**.
 
 ## Prerequisites
 
-- [AWS CLI Installed](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
-- [Terraform Installed](https://developer.hashicorp.com/terraform/downloads)
-- A valid AWS Account with permissions to create IAM, EC2, VPC, and SSM resources
+* [An AWS Account](https://aws.amazon.com/console/)
+* [Install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 
+* [Install Latest Terraform](https://developer.hashicorp.com/terraform/install)
 
-Ensure your AWS credentials are exported or available via a configured profile.
+If this is your first time watching our content, we recommend starting with this video: [AWS + Terraform: Easy Setup](https://youtu.be/BCMQo0CB9wk). It provides a step-by-step guide to properly configure Terraform, Packer, and the AWS CLI.
 
 ---
 

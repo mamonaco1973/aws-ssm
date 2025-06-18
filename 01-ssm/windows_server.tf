@@ -1,6 +1,6 @@
 data "aws_ami" "windows_ami" {
-  most_recent = true                     # Fetch the latest Windows Server AMI
-  owners      = ["amazon"]               # AWS official account for Windows AMIs
+  most_recent = true       # Fetch the latest Windows Server AMI
+  owners      = ["amazon"] # AWS official account for Windows AMIs
 
   filter {
     name   = "name"                                      # Filter AMIs by name pattern
@@ -9,7 +9,7 @@ data "aws_ami" "windows_ami" {
 }
 
 resource "aws_instance" "windows_instance" {
-  
+
   # AMAZON MACHINE IMAGE (AMI)
   # Reference the Windows AMI ID fetched dynamically via the data source.
   # This ensures the latest or specific Windows Server version is used.
@@ -20,14 +20,14 @@ resource "aws_instance" "windows_instance" {
   # Defines the compute power of the EC2 instance.
   # "t2.medium" is selected to provide more RAM and CPU power, 
   # since Windows requires more resources than Linux.
-  
+
   instance_type = "t2.medium"
 
   # NETWORK CONFIGURATION - SUBNET
   # Specifies the AWS subnet where the instance will be deployed.
   # The subnet is dynamically retrieved from a data source (ad_subnet_2).
   # This determines whether the instance is public or private.
-  
+
   subnet_id = aws_subnet.ssm-private-subnet-2.id
 
   # SECURITY GROUPS  
@@ -41,6 +41,6 @@ resource "aws_instance" "windows_instance" {
   # INSTANCE TAGS
   # Metadata tag used to identify and organize resources in AWS.
   tags = {
-    Name = "windows-instance"  # The EC2 instance name in AWS.
+    Name = "windows-instance" # The EC2 instance name in AWS.
   }
 }

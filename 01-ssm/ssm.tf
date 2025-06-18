@@ -13,12 +13,12 @@ resource "aws_ssm_document" "install_iis_custom" {
 
   # The actual SSM document content, encoded as a JSON structure
   content = jsonencode({
-    schemaVersion = "2.2",                             # Specifies the schema version for the SSM document
-    description   = "Install IIS and write a plain message",  # Short description of what this document does
+    schemaVersion = "2.2",                                   # Specifies the schema version for the SSM document
+    description   = "Install IIS and write a plain message", # Short description of what this document does
     mainSteps = [
       {
-        action = "aws:runPowerShellScript",           # The action to execute: run a PowerShell script
-        name   = "installAndConfigureIIS",            # Step name; must be unique within the document
+        action = "aws:runPowerShellScript", # The action to execute: run a PowerShell script
+        name   = "installAndConfigureIIS",  # Step name; must be unique within the document
         inputs = {
           runCommand = [
             # Output message indicating that IIS installation is starting
@@ -66,12 +66,12 @@ resource "aws_ssm_document" "install_apache_ubuntu" {
 
   # The actual content of the SSM document encoded as JSON
   content = jsonencode({
-    schemaVersion = "2.2",                          # Defines the SSM schema version
-    description   = "Install and configure Apache2 on Ubuntu",  # Summary of what the document performs
+    schemaVersion = "2.2",                                     # Defines the SSM schema version
+    description   = "Install and configure Apache2 on Ubuntu", # Summary of what the document performs
     mainSteps = [
       {
-        action = "aws:runShellScript",             # Run a shell script (Linux/Unix systems)
-        name   = "installApache",                  # Unique step name
+        action = "aws:runShellScript", # Run a shell script (Linux/Unix systems)
+        name   = "installApache",      # Unique step name
         inputs = {
           runCommand = [
             # Refresh the local package index

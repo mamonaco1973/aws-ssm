@@ -8,9 +8,9 @@ resource "aws_iam_role" "ec2_ssm_role" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        Service = "ec2.amazonaws.com"  # Only EC2 instances can assume this role
+        Service = "ec2.amazonaws.com" # Only EC2 instances can assume this role
       }
-      Action = "sts:AssumeRole"  # Allows EC2 instances to request temporary credentials
+      Action = "sts:AssumeRole" # Allows EC2 instances to request temporary credentials
     }]
   })
 }
@@ -25,5 +25,5 @@ resource "aws_iam_role_policy_attachment" "attach_ssm_policy" {
 # Create an IAM Instance Profile for EC2 instances using the SSM role
 resource "aws_iam_instance_profile" "ec2_ssm_profile" {
   name = "EC2SSMProfile"
-  role = aws_iam_role.ec2_ssm_role.name  # Associate the EC2SSMRole with this profile
+  role = aws_iam_role.ec2_ssm_role.name # Associate the EC2SSMRole with this profile
 }

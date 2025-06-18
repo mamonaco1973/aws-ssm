@@ -266,7 +266,7 @@ This document installs IIS on the Windows instance and configures a basic site.
     "inputs": {
       "runCommand": [
         "Install-WindowsFeature -Name Web-Server",
-        "Add-Content -Path 'C:\inetpub\wwwroot\index.html' -Value 'Hello from Windows via SSM!'"
+        "Add-Content -Path 'C:\\inetpub\\wwwroot\\index.html' -Value 'Hello from Windows via SSM!'"
       ]
     }
   }]
